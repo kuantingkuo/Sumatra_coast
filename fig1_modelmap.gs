@@ -9,17 +9,26 @@ lona.6=103.627478; lata.6=3.095001; lonb.6=107.929882; latb.6=-2.199273
 
 'reinit'
 'open /data/W.eddie/SPCAM/CPL64/atm.ctl'
-'set lon 'lona.0' 'lonb.6
-'set lat 'latb.0' 'lata.6
+'sdfopen ../obs/GLOBE_topo_0.05_degree_360.nc'
+*'set lon 'lona.0' 'lonb.6
+'set lon 90 110'
+*'set lat 'latb.0' 'lata.6
+'set lat -15 5'
 
-*'set mproj scaled'
-*'ini -eq'
-'ini'
+'ini -eq'
+'set mpdset hires'
+'set grads off'
+'set xlint 5'
+'set ylint 5'
+'color 0 2000 100 -kind topo2 -gxout shaded'
+'d topo.2(z=1,t=1)'
+'off'
+
 'set grads off'
 'set gxout grid'
 'd q'
 
-'set line 2'
+'set line 2 1 6'
 i=0
 while(i<=6)
 j=i-1
@@ -39,14 +48,20 @@ i=i+1
 endwhile
 
 rc=gsfallow('on')
-j=43
-while(j<=50)
+i1=math_nint(qdims(xmin))
+i2=math_nint(qdims(xmax))
+j1=math_nint(qdims(ymin))
+j2=math_nint(qdims(ymax))
+'color 1 9 1 -kind sunset'
+j=j1
+while(j<=j2)
 'set y 'j
 lato=subwrd(result,4)
-i=38
-while(i<=44)
+i=i1
+while(i<=i2)
 'set x 'i
 lono=subwrd(result,4)
+'set line 1'
 reg=1
 while(reg<=6)
 p=reg
@@ -58,17 +73,18 @@ deg4=degree(lono,lato,lona.p,lata.p,lonb.p,latb.p)
 degsum=deg1+deg2+deg3+deg4
 if(degsum>359.9)
 say i' 'j' 'reg
-'q w2xy 'lono' 'lato
-xo=subwrd(result,3)
-yo=subwrd(result,6)
-'set line 'reg
-'draw mark 3 'xo' 'yo' '0.1
+'set line 'reg+16
 break
 endif
 reg=reg+1
 endwhile
+'q w2xy 'lono' 'lato
+xo=subwrd(result,3)
+yo=subwrd(result,6)
+'draw mark 3 'xo' 'yo' '0.1
 i=i+1
 endwhile
 j=j+1
 endwhile
 
+'gxprint fig1_modelmap.svg white'

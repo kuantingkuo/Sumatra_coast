@@ -13,12 +13,12 @@ real(kind=8) :: lon1A, lat1A, lon1B, lat1B, ddeg, i
 real(kind=8) :: lon2A, lat2A, lon2B, lat2B
 
 lon1=99.75_8
-lat1=-80.05_8
+lat1=-0.05_8
 h=0._8
 call toECEF(lon1, lat1, h, x1, y1, z1)
 
 lon2=104.05_8
-lat2=-85.35_8
+lat2=-5.35_8
 h=0._8
 call toECEF(lon2, lat2, h, x2, y2, z2)
 
@@ -26,7 +26,7 @@ px=x1-x2
 py=y1-y2
 pz=z1-z2
 
-do i=1,4
+do i=1,5
    ddeg=2.5_8*real(i,kind=8)
    d=dsqrt(a**2._8-(px**2._8+py**2._8+pz**2._8)/4._8) * dsin(ddeg/2._8*pi/180._8) * 2._8
    F=a**2._8-(d**2._8/2._8)

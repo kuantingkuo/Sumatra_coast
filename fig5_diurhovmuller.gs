@@ -1,10 +1,10 @@
+case="PRSHR"
 'reinit'
 'ini -l'
 'set parea 1.3 10 2 7.75'
 'set mproj off'
-'open ../obs/TRMM3B42_sumatra_Clim.ctl'
-'open ../obs/GLOBE_topo_sumatra.ctl'
-'set x 1 61'
+'open ../'case'/'case'.diurprec.ctl'
+'set lon -10 5'
 'set t 1 last'
 
 'pd=prec'
@@ -13,13 +13,12 @@
 regs="SE WE WW SW"
 r=1
 while(r<=4)
-reg=subwrd(regs,r)
-'open ../obs/TRMM3B42_sumatra_'reg'.ctl'
-'set x 1 61'
 'set t 1 last'
-'prd=prec.3'
+reg=subwrd(regs,r)
+'prd=prec'reg
 'modify prd diurnal'
-'set time 12z01 12z02'
+* local 12 to 12
+'set time 5z01 5z02'
 
 'c'
 'on'
@@ -27,25 +26,20 @@ reg=subwrd(regs,r)
 'set grads off'
 'set yflip on'
 'set tlsupp month'
-'set xlint 200'
+'set xlint 2.5'
 'set ylabs 12|15|18|21|00|03|06|09|12'
-'color 0 30 1.5 -kind cwblgt'
+'color 3 15 1 -kind cwblgt'
 'd prd*24'
 'xcbar -fs 2 -unit [mm d`a-1`n] -yo -0.3'
-'draw xlab Distance [km]'
+'draw xlab Distance [degrees]'
 'draw ylab Local Solar Time [hr]'
 
-land1=38
-land2=52
-
-'q gr2xy 'land1' 5'
+'q w2xy 0 05Z01'
 x1=subwrd(result,3)
 y1=subwrd(result,6)
-'q gr2xy 'land2' 13'
+'q w2xy 0 05Z02'
 x2=subwrd(result,3)
 y2=subwrd(result,6)
-'q w2xy 0 00z'
-mx=subwrd(result,3)
 
 'off'
 'set gxout contour'
@@ -53,25 +47,14 @@ mx=subwrd(result,3)
 'set rgb 200 200 200 200'
 'set ccolor 1'
 'set cthick 6'
-'set clevs 9 15 21'
+'set clevs 7 10 13'
 'set clskip 1 0'
 'set clab off'
 'd pd*24'
 
-'set t 1'
-'set yflip off'
-'set vrange 0 8000'
-'set cmark 0'
-'set ccolor 100'
-'set cthick 8'
-'d maskout(topo.2,topo.2-1)'
-'set line 1 2 3'
+'set line 0 2 3'
 'draw line 'x1' 'y1' 'x1' 'y2
-'draw line 'x2' 'y1' 'x2' 'y2
-'set line 100 2 3'
-'draw line 'mx' 'y1' 'mx' 'y2
 
-'gxprint fig3_diurhovmuller_'reg'.svg white'
-'close 3'
+'gxprint ../'case'/fig5_diurhovmuller_'reg'.svg white'
 r=r+1
 endwhile

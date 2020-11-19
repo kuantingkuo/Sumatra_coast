@@ -1,7 +1,7 @@
 program precperpendicular
 use netcdf
 implicit none
-character(20), parameter :: casename="CPL64"
+character(20), parameter :: casename="PRSHR"
 character(99), parameter :: path="/data/W.eddie/SPCAM/"//trim(casename)//"/"
 integer, parameter :: nx=144, ny=96, nz=11, nt=87600, np=28
 integer, dimension(12), parameter :: dom=(/31,28,31,30,31,30,31,31,30,31,30,31/)
@@ -61,7 +61,7 @@ do i=1,8
     precperp(i,:) = precperp(i,:)/real(regcount(i), kind=4)
 enddo
 
-outfile = "/data/W.eddie/Sumatra/"//trim(casename)//".prec.nc"
+outfile = "/data/W.eddie/Sumatra/"//trim(casename)//"/"//trim(casename)//".prec.nc"
 call execute_command_line( "rm -f "//trim(outfile), wait=.True. )
 call check_nf90( nf90_create(outfile, NF90_NETCDF4, ncid) )
 call check_nf90( nf90_def_dim(ncid, "X", 8, xid) )

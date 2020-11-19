@@ -1,7 +1,7 @@
 program Uperp_profile
 use netcdf
 implicit none
-character(20), parameter :: casename="CPL64"
+character(20), parameter :: casename="PRSHR"
 character(99), parameter :: path="/data/W.eddie/SPCAM/"//trim(casename)//"/"
 integer, dimension(11), parameter :: ix=(/ 40, 41, 40, 41, 39, 40, 41, 42, 40, 41, 41 /), &
                                      iy=(/ 44, 44, 45, 45, 46, 46, 46, 46, 47, 47, 48 /)

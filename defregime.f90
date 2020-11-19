@@ -1,8 +1,8 @@
 program defregime
 use netcdf
 implicit none
-character(20), parameter :: casename="CPL64"
-character(99), parameter :: path="../"
+character(20), parameter :: casename="PRSHR"
+character(99), parameter :: path="../"//trim(casename)//"/"
 integer, parameter :: nx=8, nd=3650, nt=87600
 integer, dimension(12), parameter :: dom=(/31,28,31,30,31,30,31,31,30,31,30,31/)
 character(99) :: filename

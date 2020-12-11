@@ -1,7 +1,7 @@
 program readcltype
 use netcdf
 implicit none
-character(10), parameter :: casename="PRSHR"
+character(10), parameter :: casename="CPL64"
 character(99), parameter :: path="/data/W.eddie/cloudtype/"//trim(casename)//"/"
 character(99), parameter :: outpath="/data/W.eddie/Sumatra/"//trim(casename)//"/"
 character(3), dimension(4), parameter :: lon1=(/"98","95","93","95"/)
@@ -40,28 +40,28 @@ do year=1,10
         if(month > 4 .and. month < 12) cycle
         write(mm,'(I0.2)') month
         do i=1,4
-            filename = path//"Q_"//trim(lon1(i))//"-"//trim(lat1(i))// &
+            filename = trim(path)//"Q_"//trim(lon1(i))//"-"//trim(lat1(i))// &
                         "_"//yyyy//"-"//mm//".txt"
             open(unit=10, file=filename, status='old', access='sequential', &
                     form='formatted', action='read')
-            filename = path//"Q_"//trim(lon2(i))//"-"//trim(lat2(i))// &
+            filename = trim(path)//"Q_"//trim(lon2(i))//"-"//trim(lat2(i))// &
                         "_"//yyyy//"-"//mm//".txt"
             open(unit=20, file=filename, status='old', access='sequential', &
                     form='formatted', action='read')
-            filename = path//"Q_"//trim(lon3(i))//"-"//trim(lat3(i))// &
+            filename = trim(path)//"Q_"//trim(lon3(i))//"-"//trim(lat3(i))// &
                         "_"//yyyy//"-"//mm//".txt"
             open(unit=30, file=filename, status='old', access='sequential', &
                     form='formatted', action='read')
-            filename = path//"Q_"//trim(lon4(i))//"-"//trim(lat4(i))// &
+            filename = trim(path)//"Q_"//trim(lon4(i))//"-"//trim(lat4(i))// &
                         "_"//yyyy//"-"//mm//".txt"
             if(i <= 3) then
                 open(unit=40, file=filename, status='old', access='sequential', &
                         form='formatted', action='read')
-                filename = path//"Q_"//trim(lon5(i))//"-"//trim(lat5(i))// &
+                filename = trim(path)//"Q_"//trim(lon5(i))//"-"//trim(lat5(i))// &
                             "_"//yyyy//"-"//mm//".txt"
                 open(unit=50, file=filename, status='old', access='sequential', &
                         form='formatted', action='read')
-                filename = path//"Q_"//trim(lon6(i))//"-"//trim(lat6(i))// &
+                filename = trim(path)//"Q_"//trim(lon6(i))//"-"//trim(lat6(i))// &
                             "_"//yyyy//"-"//mm//".txt"
                 open(unit=60, file=filename, status='old', access='sequential', &
                         form='formatted', action='read')
@@ -77,7 +77,7 @@ do year=1,10
                 if (eof /= 0) exit
                 day = (time-1)/48 + 1
                 call do10y(year, month, day, j10day)
-                if (uperp(j10day) < 2.) cycle  ! SW
+                if (uperp(j10day) < -0.2814124+2.777613) cycle  ! SW
                 t = mod(time, 48)
                 if (t == 0) t = 48
                 call type2num(typetemp, clnum)

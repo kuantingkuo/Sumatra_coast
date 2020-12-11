@@ -3,6 +3,7 @@ use netcdf
 implicit none
 character(20), parameter :: casename="CPL64"
 character(99), parameter :: path="/data/W.eddie/SPCAM/"//trim(casename)//"/"
+real(kind=4), parameter :: uQ1=-0.2814124-2.777613, uQ2=-0.2814124, uQ3=-0.2814124+2.777613
 integer, parameter :: nx=144, ny=96, nz=25, nd=3650, nt=744, np=11
 integer, dimension(12), parameter :: dom=(/31,28,31,30,31,30,31,31,30,31,30,31/)
 integer, dimension(np) :: ix, iy, reg
@@ -28,7 +29,7 @@ do while(i<=np)
 enddo
 close(10)
 
-filename = "../"//trim(casename)//".Uperp.nc"
+filename = "../"//trim(casename)//"/"//trim(casename)//".Uperp.nc"
 call check_nf90( nf90_open(filename, NF90_NOWRITE, ncid) )
 call check_nf90( nf90_inq_varid(ncid, "Uperp", uid) )
 call check_nf90( nf90_get_var(ncid, uid, uperp) )
@@ -77,11 +78,11 @@ do year=1,10
             itime1 = day*24 - 23
             itime2 = day*24
             call addQcount(q(:,:,itime1:itime2),qall,countall)
-            if (ureg <= -2.) then
+            if (ureg <= uQ1) then
                 call addQcount(q(:,:,itime1:itime2),qSE,countSE)
-            elseif(ureg < 0.) then
+            elseif(ureg < uQ2) then
                 call addQcount(q(:,:,itime1:itime2),qWE,countWE)
-            elseif(ureg < 2.) then
+            elseif(ureg < uQ3) then
                 call addQcount(q(:,:,itime1:itime2),qWW,countWW)
             else
                 call addQcount(q(:,:,itime1:itime2),qSW,countSW)
@@ -97,6 +98,7 @@ qWW = qWW/real(countWW,kind=4)
 qSW = qSW/real(countSW,kind=4)
 
 filename = "/data/W.eddie/Sumatra/"//trim(casename)//"/"//trim(casename)//".Qprofile.nc"
+call execute_command_line( "rm -f "//trim(filename), wait=.True. )
 call check_nf90( nf90_create(filename, NF90_NETCDF4, ncid) )
 call check_nf90( nf90_def_dim(ncid, "lev", nz, zid) )
 call check_nf90( nf90_def_var(ncid, "lev", NF90_FLOAT, zid, levid) )

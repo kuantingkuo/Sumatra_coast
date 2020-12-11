@@ -1,9 +1,10 @@
+case='PRSHR'
 cltypes="Hc As Ac St Sc Cu Ns Dc"
 regimes="SE WE WW SW"
 'reinit'
 'ini -l'
 'set mproj off'
-'open clsize_diurnal_DJFMA.ctl'
+'open ../'case'/clsize_diurnal_DJFMA.ctl'
 i=1
 while(i<=8)
 type=subwrd(cltypes,i)
@@ -18,7 +19,7 @@ endwhile
 r=1
 while(r<=4)
 reg=subwrd(regimes,r)
-'open clsize_diurnal_DJFMA_'reg'.ctl'
+'open ../'case'/clsize_diurnal_DJFMA_'reg'.ctl'
 
 i=1
 while(i<=8)

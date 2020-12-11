@@ -1,4 +1,4 @@
-case="PRSHR"
+case="CPL64"
 'reinit'
 'ini -l'
 'set parea 1.3 10 2 7.75'
@@ -28,7 +28,7 @@ reg=subwrd(regs,r)
 'set tlsupp month'
 'set xlint 2.5'
 'set ylabs 12|15|18|21|00|03|06|09|12'
-'color 3 15 1 -kind cwblgt'
+'color 3 15 1 -kind cwblgt -gxout grfill'
 'd prd*24'
 'xcbar -fs 2 -unit [mm d`a-1`n] -yo -0.3'
 'draw xlab Distance [degrees]'
@@ -55,6 +55,6 @@ y2=subwrd(result,6)
 'set line 0 2 3'
 'draw line 'x1' 'y1' 'x1' 'y2
 
-'gxprint ../'case'/fig5_diurhovmuller_'reg'.svg white'
+'gxprint fig5_diurhovmuller_'reg'.svg white'
 r=r+1
 endwhile

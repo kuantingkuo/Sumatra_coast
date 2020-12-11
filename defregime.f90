@@ -1,8 +1,9 @@
 program defregime
 use netcdf
 implicit none
-character(20), parameter :: casename="PRSHR"
+character(20), parameter :: casename="CPL64"
 character(99), parameter :: path="../"//trim(casename)//"/"
+real(kind=4), parameter :: uQ1=-0.2814124-2.777613, uQ2=-0.2814124, uQ3=-0.2814124+2.777613
 integer, parameter :: nx=8, nd=3650, nt=87600
 integer, dimension(12), parameter :: dom=(/31,28,31,30,31,30,31,31,30,31,30,31/)
 character(99) :: filename
@@ -45,13 +46,13 @@ do year=1,10
             h2 = h1 + 23
             diurprec = diurprec + prec(:,h1:h2)
             countall = countall + 1
-            if (uperp(countd)<=-2.) then
+            if (uperp(countd)<=uQ1) then
                 diurprecSE = diurprecSE + prec(:,h1:h2)
                 countSE = countSE + 1
-            elseif(uperp(countd)<0.) then
+            elseif(uperp(countd)<uQ2) then
                 diurprecWE = diurprecWE + prec(:,h1:h2)
                 countWE = countWE + 1
-            elseif(uperp(countd)<2.) then
+            elseif(uperp(countd)<uQ3) then
                 diurprecWW = diurprecWW + prec(:,h1:h2)
                 countWW = countWW + 1
             else

@@ -1,8 +1,9 @@
+case="PRSHR"
 cltypes="Hc As Ac St Sc Cu Ns Dc"
 'reinit'
 'ini -l'
 'set mproj off'
-'open clsize_diurnal_DJFMA.ctl'
+'open ../'case'/clsize_diurnal_DJFMA.ctl'
 'points=const(maskout(const(hc,4),lon<-2.5),3,-u)'
 'set t 1 last'
 'sumtype=const(hc,0)'
@@ -27,7 +28,7 @@ while(t<=8)
     'draw title 'type
     'draw xlab distance from the coast [degrees]'
     'draw ylab local time [h]'
-    'gxprint ../CPL64.clsize_diurnal_'type'.png white'
+    'gxprint ../'case'/'case'.clsize_diurnal_'type'.png white'
     'sumtype=sumtype+mean'type
     t=t+1
 endwhile
@@ -43,7 +44,7 @@ endwhile
 'draw xlab distance from the coast [degrees]'
 'draw ylab local time [h]'
 'cbar3 [km`a-2`n]'
-'gxprint ../CPL64.clsize_diurnal_All.png white'
+'gxprint ../'case'/'case'.clsize_diurnal_All.png white'
 
 'c'
 'set grads off'
@@ -66,7 +67,7 @@ while(t<=8)
     t=t+1
 endwhile
 'legend tr 8 'cltypes' 2 3 4 5 6 7 8 9'
-'gxprint ../CPL64.clfrac_ocn.png white'
+'gxprint ../'case'/'case'.clfrac_ocn.png white'
 
 'on'
 'c'
@@ -90,4 +91,4 @@ while(t<=8)
     t=t+1
 endwhile
 'legend tr 8 'cltypes' 2 3 4 5 6 7 8 9'
-'gxprint ../CPL64.clfrac_lnd.png white'
+'gxprint ../'case'/'case'.clfrac_lnd.png white'
